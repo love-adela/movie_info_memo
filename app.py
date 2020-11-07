@@ -19,7 +19,10 @@ def post_articles():
     if not (article['title'] and article['content']):
         return jsonify({'result': 'failed'}), 400
 
-    db.articles.insert_one(article)
+    db.articles.insert_one({
+        'title': article['title'],
+        'content': article['content']
+    })
     return jsonify({'result': 'success', 'msg':'글이 작성되었습니다.'})
 
 if __name__ == "__main__":
