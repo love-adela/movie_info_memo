@@ -38,19 +38,31 @@
       integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
       crossorigin="anonymous"></script>
   <script>
-    function postArticle(title, content) {
-      const url = $("#post-title").val();
-      const comment = $("#post-content").val();
+    function postArticle() {
+      const title = $("#post-title").val();
+      const content = $("#post-content").val();
       $.ajax({
         type: "POST",
         url: "/memo",
-        data: {'client_title': title, 'client_content':content},
+        data: JSON.stringify({title, content}),
+        contentType: 'application/json',
         success: function (response) {
-          if (response["result"]=="success") {
+          // 게시물 작성하고 form 비우기
+          $('#post-title').val('')
+          $('#post-content').val('')
+          window.location.reload()
+        }
+      })
+    }
+
+    function getArticle(){
+      $.ajax({
+        type: "GET",
+        url: "/memo",
+        data: {},
+        success: function (response) {
+          if (response["result"] == "success") {
             alert(response["msg"]);
-            window.location.reload()
-          } else {
-            alert("서버 오류!")
           }
         }
       })
