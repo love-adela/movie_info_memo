@@ -103,6 +103,7 @@
         data: JSON.stringify({title, content}),
         contentType: 'application/json',
         success: function (response) {
+          alert('수정 완료!')
           $(`#${id} > .view > .title`).text(title)
           $(`#${id} > .view > .content`).text(content)
         }
