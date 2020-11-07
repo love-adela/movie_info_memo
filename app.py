@@ -29,7 +29,6 @@ def post_articles():
     if not (article['title'] and article['content']):
         return jsonify({'result': 'failed'}), 400
 
-    # TODO: 에러 핸들링
     db.articles.insert_one({
         'title': article['title'],
         'content': article['content']
