@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Stylish&display=swap');
+
+* {
+    font-family: "Stylish", sans-serif;
+}
+
+.wrap {
+    width: 900px;
+    margin: auto;
+}
+
+.form-post {
+    width: 500px;
+    padding: 50px;
+    border-radius: 5px;
+}
