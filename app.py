@@ -18,12 +18,12 @@ db = MongoClient('localhost', 27017).dbJungleTest
 def index():
     return render_template('index.html')
 
-@app.route('/memo', methods=['GET'])
+@app.route('/api', methods=['GET'])
 def get_articles():
     result = list(db.articles.find())
     return jsonify({'result': 'success', 'articles': result})
 
-@app.route('/memo', methods=['POST'])
+@app.route('/api', methods=['POST'])
 def post_articles():
     article = request.get_json()
     if not (article['title'] and article['content']):
@@ -36,7 +36,7 @@ def post_articles():
     })
     return jsonify({'result': 'success', 'msg':'글이 작성되었습니다.'})
 
-@app.route('/memo/<id>', methods=['PUT'])
+@app.route('/api/<id>', methods=['PUT'])
 def update_articles(id):
     article = request.get_json()
     if not (article['title'] and article['content']):
