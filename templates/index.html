@@ -48,6 +48,7 @@
         data: JSON.stringify({title, content}),
         contentType: 'application/json',
         success: function (response) {
+          alert('저장 완료!')
           // 게시물 작성하고 form 비우기
           $('#post-title').val('')
           $('#post-content').val('')
