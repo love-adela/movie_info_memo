@@ -22,3 +22,8 @@
 .card:not([data-editting]) > .edit {
     display: none;
 }
+
+.btn-xs.btn-xs {
+    padding: 0px 4px;
+    font-size: 0.8em;
+}

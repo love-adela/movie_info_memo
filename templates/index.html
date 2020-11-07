@@ -68,10 +68,10 @@
           const temp_html = `
             <div id="${id}" class="card">
               <div class="view card-body">
-                <h1 class="title">${title}</h1>
+                <h3 class="title">${title}</h3>
                 <p class="content card-text">${content}</p>
-                <button onclick="startUpdateArticle('${id}')">수정</button>
-                <button onclick="deleteArticle('${id}')">삭제</button>
+                <button class="btn btn-secondary btn-xs" onclick="startUpdateArticle('${id}')">수정</button>
+                <button class="btn btn-dark btn-xs" onclick="deleteArticle('${id}')">삭제</button>
               </div>
               <form class="edit card-body" onsubmit="finishUpdateArticle(event, '${id}')">
                 <p><input type="text" name="newTitle" value="${title}"></p>
