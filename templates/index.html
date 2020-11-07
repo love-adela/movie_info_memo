@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>SW사관학교 정글 | 간단메모</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta property="og:title" content="SW사관학교 정글 과제 제출합니다." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="#">
+  <meta property="og:description" content="지원자 정지윤 | 나홀로 메모장 제출">
+  <link rel="stylesheet" href="../static/style.css">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+  crossorigin="anonymous">
+</head>
+<body>
+  <div class="wrap">
+    <div class="jumbotron">
+        <h1 class="display-4">나홀로 메모장</h1><!-- TODO: ver 2.0 표시하기-->
+        <div id="post-box" class="form-post">
+          <div class="form-group">
+              <input id="post-title" class="form-control" placeholder="메모 제목을 입력하세요">
+          </div>
+          <div class="form-group">
+              <textarea id="post-content" class="form-control" placeholder="내용을 입력하세요" rows="2"></textarea>
+          </div>
+          <button type="button" class="btn btn-primary" onclick="postArticle()">저장하기</button>
+        </div>
+      </div>
+    </div>
+    
+  </div>  
+  <!-- JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+  <script>
+    function postArticle(title, content) {
+      const url = $("#post-title").val();
+      const comment = $("#post-content").val();
+      $.ajax({
+        type: "POST",
+        url: "/memo",
+        data: {'client_title': title, 'client_content':content},
+        success: function (response) {
+          if (response["result"]=="success") {
+            alert(response["msg"]);
+            window.location.reload()
+          } else {
+            alert("서버 오류!")
+          }
+        }
+      })
+    }
+  </script>
+</body>
