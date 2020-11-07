@@ -2,7 +2,7 @@ from flask import Flask, render_template, jsonify, request
 from pymongo import MongoClient
 
 app = Flask(__name__)
-db = MongoClient('localhost', 27017).dbTest
+db = MongoClient('localhost', 27017).dbJungleTest
 
 @app.route('/')
 def index():
@@ -20,7 +20,7 @@ def post_articles():
         return jsonify({'result': 'failed'}), 400
 
     db.articles.insert_one(article)
-    return jsonify({'result': 'success', 'msg':'POST 연결되었습니다!'})
+    return jsonify({'result': 'success', 'msg':'글이 작성되었습니다.'})
 
 if __name__ == "__main__":
     app.run('0.0.0.0', port=5000, debug=True)
