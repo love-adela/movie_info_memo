@@ -10,15 +10,16 @@ def index():
 
 @app.route('/memo', methods=['GET'])
 def get_articles():
-    result = list(db.posts.find({}))
-    return jsonify({'result': 'success'})
+    result = list(db.articles.find({}, {'_id':0}))
+    return jsonify({'result': 'success', 'articles': result})
 
 @app.route('/memo', methods=['POST'])
 def post_articles():
-    post_title = request.form['client_title']
-    post_content = request.form['client_content']
-    article = {'client_title':post_title, 'client_content': post_content}
-    db.posts.insert_one(article)
+    article = request.get_json()
+    if not (article['title'] and article['content']):
+        return jsonify({'result': 'failed'}), 400
+
+    db.articles.insert_one(article)
     return jsonify({'result': 'success', 'msg':'POST 연결되었습니다!'})
 
 if __name__ == "__main__":
