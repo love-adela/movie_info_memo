@@ -74,9 +74,9 @@
                 <button class="btn btn-dark btn-xs" onclick="deleteArticle('${id}')">삭제</button>
               </div>
               <form class="edit card-body" onsubmit="finishUpdateArticle(event, '${id}')">
-                <p><input type="text" name="newTitle" value="${title}"></p>
-                <p><textarea name=newContent>${content}</textarea></p>
-                <input type="submit" value="저장">
+                <p><input type="text" class="form-control" name="newTitle" value="${title}"></p>
+                <p><textarea class="form-control" name=newContent>${content}</textarea></p>
+                <input type="submit" class="btn btn-primary btn-xs" value="저장">
               </form>
             </div>
           `
