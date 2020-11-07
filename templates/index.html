@@ -42,6 +42,7 @@
     function postArticle() {
       const title = $("#post-title").val();
       const content = $("#post-content").val();
+      // TODO: 에러 핸들링
       $.ajax({
         type: "POST",
         url: "/memo",
@@ -56,23 +57,55 @@
       })
     }
 
+    // TODO: 에러 핸들링
     $.ajax({
       type: "GET",
       url: "/memo",
       data: {},
       success: function (response) {
         for (const article of response.articles) {
-          const title = article.title
-          const content = article.content
-          const temp_html = `<div class="card">
-              <div class="card-body">
-                <h1>${title}</h1>
-                <p class="card-text">${content}</p>
+          const { _id: id, title, content } = article
+          const temp_html = `
+            <div id="${id}" class="card">
+              <div class="view card-body">
+                <h1 class="title">${title}</h1>
+                <p class="content card-text">${content}</p>
+                <button onclick="startUpdateArticle('${id}')">수정</button>
               </div>
-            </div>`
+              <form class="edit card-body" onsubmit="finishUpdateArticle(event, '${id}')">
+                <p><input type="text" name="newTitle" value="${title}"></p>
+                <p><textarea name=newContent>${content}</textarea></p>
+                <input type="submit" value="저장">
+              </form>
+            </div>
+          `
           $("#card-box").prepend(temp_html)
         }
       }
     })
+
+    function startUpdateArticle(id) {
+      $(`#${id}`).attr('data-editting', true)
+    }
+
+    function finishUpdateArticle(event, id) {
+      event.preventDefault()
+      $(`#${id}`).removeAttr('data-editting')
+
+      const title = event.target.newTitle.value
+      const content = event.target.newContent.value
+
+      // TODO: 에러 핸들링
+      $.ajax({
+        type: "PUT",
+        url: `/memo/${id}`,
+        data: JSON.stringify({title, content}),
+        contentType: 'application/json',
+        success: function (response) {
+          $(`#${id} > .view > .title`).text(title)
+          $(`#${id} > .view > .content`).text(content)
+        }
+      })
+    }
   </script>
 </body>
