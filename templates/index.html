@@ -41,7 +41,10 @@
     function postArticle() {
       const title = $("#post-title").val();
       const content = $("#post-content").val();
-      // TODO: 에러 핸들링
+
+      // TODO: title, content 입력하라고 경고주기
+      if (title === '' || content === '') { return }
+
       $.ajax({
         type: "POST",
         url: "/api",
@@ -53,11 +56,13 @@
           $('#post-title').val('')
           $('#post-content').val('')
           window.location.reload()
+        },
+        error: function (response) {
+          alert('메모 작성에 실패했습니다')
         }
       })
     }
 
-    // TODO: 에러 핸들링
     $.ajax({
       type: "GET",
       url: "/api",
@@ -82,6 +87,9 @@
           `
           $("#card-box").prepend(temp_html)
         }
+      },
+      error: function (response) {
+        alert('메모 목록 불러오기에 실패했습니다')
       }
     })
 
@@ -91,12 +99,12 @@
 
     function finishUpdateArticle(event, id) {
       event.preventDefault()
-      $(`#${id}`).removeAttr('data-editting')
-
       const title = event.target.newTitle.value
       const content = event.target.newContent.value
 
-      // TODO: 에러 핸들링
+      // TODO: title, content 입력하라고 경고주기
+      if (title === '' || content === '') { return }
+
       $.ajax({
         type: "PUT",
         url: `/api/${id}`,
@@ -104,8 +112,12 @@
         contentType: 'application/json',
         success: function (response) {
           alert('수정 완료!')
+          $(`#${id}`).removeAttr('data-editting')
           $(`#${id} > .view > .title`).text(title)
           $(`#${id} > .view > .content`).text(content)
+        },
+        error: function (response) {
+          alert('수정에 실패했습니다')
         }
       })
     }
