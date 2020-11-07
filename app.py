@@ -11,7 +11,7 @@ def index():
 @app.route('/memo', methods=['GET'])
 def get_articles():
     result = list(db.posts.find({}))
-    return jsonify({'result': 'success's})
+    return jsonify({'result': 'success'})
 
 @app.route('/memo', methods=['POST'])
 def post_articles():
