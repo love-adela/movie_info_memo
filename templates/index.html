@@ -29,6 +29,7 @@
           <button type="button" class="btn btn-primary" onclick="postArticle()">저장하기</button>
         </div>
       </div>
+      <div id="card-box"></div>
     </div>
     
   </div>  
@@ -55,17 +56,23 @@
       })
     }
 
-    function getArticle(){
-      $.ajax({
-        type: "GET",
-        url: "/memo",
-        data: {},
-        success: function (response) {
-          if (response["result"] == "success") {
-            alert(response["msg"]);
-          }
+    $.ajax({
+      type: "GET",
+      url: "/memo",
+      data: {},
+      success: function (response) {
+        for (const article of response.articles) {
+          const title = article.title
+          const content = article.content
+          const temp_html = `<div class="card">
+              <div class="card-body">
+                <h1>${title}</h1>
+                <p class="card-text">${content}</p>
+              </div>
+            </div>`
+          $("#card-box").prepend(temp_html)
         }
-      })
-    }
+      }
+    })
   </script>
 </body>
