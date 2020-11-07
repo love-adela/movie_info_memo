@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
 <head>
   <meta charset="utf-8">
   <title>SW사관학교 정글 | 간단메모</title>
@@ -15,119 +14,116 @@
   integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
   crossorigin="anonymous">
 </head>
-<body>
-  <div class="wrap">
-    <div class="jumbotron">
-      <h1 class="display-6">나홀로 메모장 <span class="badge badge-secondary">ver2.0</span></h1>
-      <form id="post-box" class="form-post" onsubmit="postArticle(event)">
-        <div class="form-group">
-          <input type=text name=newTitle id="post-title" class="form-control" placeholder="메모 제목을 입력하세요" required>
-        </div>
-        <div class="form-group">
-          <textarea id="post-content" name=newContent class="form-control" placeholder="내용을 입력하세요" rows="3" required></textarea>
-        </div>
-        <input type="submit" class="btn btn-primary" value="저장하기">
-      </form>
-    </div>
-    <div id="card-box" class="card-columns"></div>
+<div class="wrap">
+  <div class="jumbotron">
+    <h1 class="display-6">나홀로 메모장 <span class="badge badge-secondary">ver2.0</span></h1>
+    <form id="post-box" class="form-post" onsubmit="postArticle(event)">
+      <div class="form-group">
+        <input type=text name=newTitle id="post-title" class="form-control" placeholder="메모 제목을 입력하세요" required>
+      </div>
+      <div class="form-group">
+        <textarea id="post-content" name=newContent class="form-control" placeholder="내용을 입력하세요" rows="3" required></textarea>
+      </div>
+      <input type="submit" class="btn btn-primary" value="저장하기">
+    </form>
   </div>
-  <!-- JS -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"></script>
-  <script>
-    function postArticle(event) {
-      event.preventDefault()
-      const title = event.target.newTitle.value
-      const content = event.target.newContent.value
-      if (title === '' || content === '') { return }
-
-      $.ajax({
-        type: "POST",
-        url: "/api",
-        data: JSON.stringify({title, content}),
-        contentType: 'application/json',
-        success: function (response) {
-          alert('저장 완료!')
-          // 게시물 작성하고 form 비우기
-          $('#post-title').val('')
-          $('#post-content').val('')
-          window.location.reload()
-        },
-        error: function (response) {
-          alert('메모 작성에 실패했습니다')
-        }
-      })
-    }
+  <div id="card-box" class="card-columns"></div>
+</div>
+<!-- JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script>
+  function postArticle(event) {
+    event.preventDefault()
+    const title = event.target.newTitle.value
+    const content = event.target.newContent.value
+    if (title === '' || content === '') { return }
 
     $.ajax({
-      type: "GET",
+      type: "POST",
       url: "/api",
-      data: {},
+      data: JSON.stringify({title, content}),
+      contentType: 'application/json',
       success: function (response) {
-        for (const article of response.articles) {
-          const { _id: id, title, content } = article
-          const temp_html = `
-            <div id="${id}" class="card">
-              <div class="view card-body">
-                <h3 class="title">${title}</h3>
-                <p class="content card-text">${content}</p>
-                <button class="btn btn-secondary btn-xs" onclick="startUpdateArticle('${id}')">수정</button>
-                <button class="btn btn-dark btn-xs" onclick="deleteArticle('${id}')">삭제</button>
-              </div>
-              <form class="edit card-body" onsubmit="finishUpdateArticle(event, '${id}')">
-                <p><input type="text" class="form-control" name="newTitle" value="${title}" required></p>
-                <p><textarea class="form-control" name=newContent required>${content}</textarea></p>
-                <input type="submit" class="btn btn-primary btn-xs" value="저장">
-              </form>
-            </div>
-          `
-          $("#card-box").prepend(temp_html)
-        }
+        alert('저장 완료!')
+        // 게시물 작성하고 form 비우기
+        $('#post-title').val('')
+        $('#post-content').val('')
+        window.location.reload()
       },
       error: function (response) {
-        alert('메모 목록 불러오기에 실패했습니다')
+        alert('메모 작성에 실패했습니다')
       }
     })
+  }
 
-    function startUpdateArticle(id) {
-      $(`#${id}`).attr('data-editting', true)
+  $.ajax({
+    type: "GET",
+    url: "/api",
+    data: {},
+    success: function (response) {
+      for (const article of response.articles) {
+        const { _id: id, title, content } = article
+        const temp_html = `
+          <div id="${id}" class="card">
+            <div class="view card-body">
+              <h3 class="title">${title}</h3>
+              <p class="content card-text">${content}</p>
+              <button class="btn btn-secondary btn-xs" onclick="startUpdateArticle('${id}')">수정</button>
+              <button class="btn btn-dark btn-xs" onclick="deleteArticle('${id}')">삭제</button>
+            </div>
+            <form class="edit card-body" onsubmit="finishUpdateArticle(event, '${id}')">
+              <p><input type="text" class="form-control" name="newTitle" value="${title}" required></p>
+              <p><textarea class="form-control" name=newContent required>${content}</textarea></p>
+              <input type="submit" class="btn btn-primary btn-xs" value="저장">
+            </form>
+          </div>
+        `
+        $("#card-box").prepend(temp_html)
+      }
+    },
+    error: function (response) {
+      alert('메모 목록 불러오기에 실패했습니다')
     }
+  })
 
-    function finishUpdateArticle(event, id) {
-      event.preventDefault()
-      const title = event.target.newTitle.value
-      const content = event.target.newContent.value
-      if (title === '' || content === '') { return }
+  function startUpdateArticle(id) {
+    $(`#${id}`).attr('data-editting', true)
+  }
 
-      $.ajax({
-        type: "PUT",
-        url: `/api/${id}`,
-        data: JSON.stringify({title, content}),
-        contentType: 'application/json',
-        success: function (response) {
-          alert('수정 완료!')
-          $(`#${id}`).removeAttr('data-editting')
-          $(`#${id} > .view > .title`).text(title)
-          $(`#${id} > .view > .content`).text(content)
-        },
-        error: function (response) {
-          alert('수정에 실패했습니다')
-        }
-      })
-    }
+  function finishUpdateArticle(event, id) {
+    event.preventDefault()
+    const title = event.target.newTitle.value
+    const content = event.target.newContent.value
+    if (title === '' || content === '') { return }
 
-    function deleteArticle(id) {
-      $.ajax({
-        type: "DELETE",
-        url: `/api/${id}`,
-        success: function (response) {
-          alert('삭제 완료!')
-          window.location.reload()
-        }
-      })
-    }
-  </script>
-</body>
-</html>
+    $.ajax({
+      type: "PUT",
+      url: `/api/${id}`,
+      data: JSON.stringify({title, content}),
+      contentType: 'application/json',
+      success: function (response) {
+        alert('수정 완료!')
+        $(`#${id}`).removeAttr('data-editting')
+        $(`#${id} > .view > .title`).text(title)
+        $(`#${id} > .view > .content`).text(content)
+      },
+      error: function (response) {
+        alert('수정에 실패했습니다')
+      }
+    })
+  }
+
+  function deleteArticle(id) {
+    $.ajax({
+      type: "DELETE",
+      url: `/api/${id}`,
+      success: function (response) {
+        alert('삭제 완료!')
+        window.location.reload()
+      }
+    })
+  }
+</script>
