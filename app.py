@@ -55,5 +55,10 @@ def update_articles(id):
 
     return jsonify({'result': 'success', 'msg':'글이 수정되었습니다.'})
 
+@app.route('/api/<id>', methods=['DELETE'])
+def delete_articles(id):
+    db.articles.delete_one({'_id': ObjectId(id)})
+    return jsonify({'result': 'success'})
+
 if __name__ == "__main__":
     app.run('0.0.0.0', port=5000, debug=True)
