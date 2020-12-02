@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Stylish&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&display=swap');
 
 * {
-    font-family: "Stylish", sans-serif;
+    font-family: "Nanum Myeongjo", sans-serif;
 }
 
 input[type=text]:focus, textarea.form-control:focus {
@@ -31,4 +31,14 @@ input[type=text]:focus, textarea.form-control:focus {
 .btn-xs.btn-xs {
     padding: 0px 4px;
     font-size: 0.8em;
+}
+
+.btn-primary {
+    background-color: #eed300;
+    color: black;
+}
+
+.btn-primary:hover {
+    background-color: #eed300;
+    color: black;
 }
