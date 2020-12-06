@@ -33,12 +33,16 @@ input[type=text]:focus, textarea.form-control:focus {
     font-size: 0.8em;
 }
 
-.btn-primary {
+.btn-primary.btn-primary {
     background-color: #eed300;
+    border-color: #eed300;
     color: black;
+    font-weight: 400;
 }
 
-.btn-primary:hover {
+.btn-primary.btn-primary:hover {
     background-color: #eed300;
+    border-color: #eed300;
     color: black;
+    font-weight: 400;
 }
